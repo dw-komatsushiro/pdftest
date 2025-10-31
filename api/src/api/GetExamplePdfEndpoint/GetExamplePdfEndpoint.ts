@@ -1,0 +1,27 @@
+import { FastifyRequest, FastifyReply } from 'fastify';
+import { buildExamplePdfTemplate } from '../../domain/PdfTemplate/PdfTemplateService';
+import { GetExamplePdfEndpointRequestSchemaType } from './schema';
+
+
+export const handler = async (request: FastifyRequest<{ Querystring: GetExamplePdfEndpointRequestSchemaType }>, reply: FastifyReply) => {
+
+  const builtPdf = await buildExamplePdfTemplate({
+    exampleId: request.query.dataId, // 関連データ取得のためのIDなどを想定
+    needSeal: request.query.withSeal ?? false,
+    name: request.query.name, // 宛名
+    note: request.query.note, // 備考
+    quantity: request.query.quantity, // 枚数
+    documentMetadata: {
+      title: request.query.fileName,
+    }
+  });
+
+  const baseName = request.query.fileName;
+  const originalFileName = `${baseName}.pdf`;
+  const encodedFileName = encodeURIComponent(originalFileName);
+  reply
+      .header('Content-Type', 'application/pdf')
+      .header('Content-Disposition', `attachment; filename*=UTF-8''${encodedFileName};`)
+      .send(builtPdf);
+  return reply;
+};

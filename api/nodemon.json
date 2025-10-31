@@ -1,0 +1,5 @@
+{
+  "watch": ["src", "../../packages/common/src"],
+  "ext": "ts",
+  "exec": "tsx --tsconfig tsconfig.json src/server/main.ts"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "pdftest",
+  "version": "1.0.0",
+  "workspaces": [
+    "api",
+    "web"
+  ],
+  "scripts": {
+    "dev": "pnpm --stream -r dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.9.2"
+  }
+}
