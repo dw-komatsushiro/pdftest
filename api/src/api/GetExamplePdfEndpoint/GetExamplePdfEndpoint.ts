@@ -1,11 +1,11 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { buildExamplePdfTemplate } from '../../domain/PdfTemplate/PdfTemplateService';
+import { generatePlusOnePdf } from '../../domain/PlusOne/PlusOnePdfService';
 import { GetExamplePdfEndpointRequestSchemaType } from './schema';
 
 
 export const handler = async (request: FastifyRequest<{ Querystring: GetExamplePdfEndpointRequestSchemaType }>, reply: FastifyReply) => {
 
-  const builtPdf = await buildExamplePdfTemplate({
+  const builtPdf = await generatePlusOnePdf({
     exampleId: request.query.dataId, // 関連データ取得のためのIDなどを想定
     needSeal: request.query.withSeal ?? false,
     name: request.query.name, // 宛名

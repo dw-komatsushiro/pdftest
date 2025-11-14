@@ -1,11 +1,11 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { buildExample2PdfTemplate } from '../../domain/PdfTemplate/PdfTemplateService';
+import { generateFieldExamplePdf } from '../../domain/FieldExample/FieldExamplePdfService';
 import { GetFieldExamplePdfEndpointRequestSchemaType } from './schema';
 
 
 export const handler = async (request: FastifyRequest<{ Querystring: GetFieldExamplePdfEndpointRequestSchemaType }>, reply: FastifyReply) => {
 
-  const builtPdf = await buildExample2PdfTemplate({
+  const builtPdf = await generateFieldExamplePdf({
     value: request.query.value, // 関連データ取得のためのIDなどを想定
     documentMetadata: {
       title: request.query.fileName,
