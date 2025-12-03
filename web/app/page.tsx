@@ -25,21 +25,7 @@ export default function Home() {
               width={20}
               height={20}
             />
-            Download PDF (pdf-lib)
-          </a>
-          <a
-            className="rounded-full border border-solid border-blue-500 transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="/pdf-me"
-            target="_blank"
-          >
-            <Image
-              className="invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Download PDF (PDFME)
+            Download PDF (pdf-me)
           </a>
         </div>
       </main>
