@@ -30,7 +30,14 @@ const initializeSealDrive = async () => {
 
 };
 
-// 指定したIDのBufferを取得する
+/**
+ * Google Driveから指定したファイルIDの印影バイナリを取得する
+ * 権限の関係上、エラー時はファイルIDや認証情報をログに出力しない想定
+ *
+ * @param fileId Google DriveのファイルID
+ * @returns ファイルのバイナリデータ
+ * @throws 印影データの取得に失敗した場合はエラー（詳細情報はログに出力しない）
+ */
 export const getFileById = async (fileId: string) => {
     try {
         const drive = await initializeSealDrive();

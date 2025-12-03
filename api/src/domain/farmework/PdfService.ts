@@ -5,18 +5,37 @@ import {image, multiVariableText, text} from "@pdfme/schemas";
 
 //テンプレートからPDFを生成するサービス
 
-// どの入力欄を何に置換するかの情報を持つ
+/**
+ * PDF生成に必要な情報
+ * テンプレートのどの入力欄を何に置換するかを定義する
+ */
 interface PdfInfo {
-    /** ファイルタイトル **/
+    /** ファイルタイトル */
     title: string;
 
-    /** フィールド値情報 */
-    // 画像はbase64文字列。印影も通常プロパティと同様に渡す
-    // 事前にページを割ってる場合はページ単位でフィールド設定
+    /** フィールド値情報（ページごとの置換マップ）
+     * - 画像はbase64文字列で指定
+     * - 印影も通常プロパティと同様に渡す
+     * - 事前にページを割っている場合はページ単位でフィールドを設定
+     */
     fieldReplaceMap: Record<string, string>[];
 
 }
 
+/**
+ * PDFテンプレートからPDFを生成する
+ * テンプレートで使用されているフォントを自動的に読み込み、フィールド値を置換してPDFを生成する
+ *
+ * @param PdfInfo PDF生成に必要な情報（タイトル、フィールド値）
+ * @param PdfTemplate PDFテンプレート（@pdfme/common形式）
+ * @returns 生成されたPDFのバイナリデータ
+ * @throws PDF生成に失敗した場合はエラー
+ *
+ * @remarks
+ * - テンプレートで指定されたフォントを並列で読み込む
+ * - 最初のフォントがフォールバックフォントとして設定される
+ * - text, image, multiVariableTextプラグインに対応
+ */
 export const generatePdf = async (
     PdfInfo: PdfInfo,
     PdfTemplate: Template

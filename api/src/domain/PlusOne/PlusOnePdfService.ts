@@ -5,17 +5,34 @@ import {generatePdf} from "../farmework/PdfService";
 import {findPdfTemplate, PdfTemplateType} from "../farmework/PdfTemplateQueryService";
 import {convertSealBinaryToBase64, findPdfSealBinary, SealNmae} from "../farmework/PdfSerlQueryService";
 
+/**
+ * +One領収書PDF生成の入力パラメータ
+ */
 interface PlusOnePdfInput {
+    /** 関連データ取得のためのID */
     exampleId: string;
+    /** 印影が必要かどうか */
     needSeal: boolean;
+    /** 宛名 */
     name: string;
+    /** 備考（任意） */
     note?: string;
+    /** チケット枚数 */
     quantity: number;
+    /** ドキュメントメタデータ */
     documentMetadata: {
+        /** ファイルタイトル */
         title: string;
     };
 }
 
+/**
+ * +One領収書PDFを生成するサンプル
+ *
+ * @param input 領収書生成に必要なパラメータ
+ * @returns 生成されたPDFのバイナリデータ
+ *
+ */
 export const generatePlusOnePdf = async (input: PlusOnePdfInput): Promise<Buffer> =>  {
 
     const Template = await findPdfTemplate(PdfTemplateType.PLUS_ONE)

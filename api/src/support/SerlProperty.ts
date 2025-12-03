@@ -1,5 +1,19 @@
 // 印影関連の高機密情報専用の設定テーブルから値を取得するユーティリティ
 
+/**
+ * 印影関連の高機密情報を環境変数から取得する
+ * 本来はDB上で暗号化して保存し、環境変数から取得した復号キーで復号化する必要がある
+ * 印影データは社内でもアクセス可能者が限定される機密情報のため、アクセス管理に基づく対策が必須
+ *
+ * @param names 取得するプロパティ名のマップ（キー: 返却オブジェクトのキー、値: 環境変数名）
+ * @returns 取得したプロパティ値のマップ
+ * @throws 環境変数が見つからない場合はエラー
+ *
+ * @example
+ * const { serviceAccountKey } = await findSealPropertyValues({
+ *   serviceAccountKey: 'GOOGLE_SERVICE_ACCOUNT_KEY'
+ * });
+ */
 export const findSealPropertyValues = async <T extends { [key in string]: string }>(names: T) => {
     // app_property同様にkeyから値をとってくる
     // const queryResult = await appDb.appPropertyTable.findMany({
